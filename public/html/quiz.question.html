@@ -26,7 +26,7 @@ $(document).ready(function(){
 						<!-- <span ng-repeat="question in quizResult.quizQuestions">
 							<a href="#" ng-click="gotoQuestion($index)" ng-class="{selected: isCurrentQuestion($index)}">{{$index + 1}}</a>
 						</span> -->
-						<select ng-options="key as key*1 + 1 for (key, question) in quizResult.quizQuestions" ng-model="selectedQuestion.index"></select>
+						<select ng-options="key as (key*1 + 1) + (question.userAnswer ? '' : ' *') for (key, question) in quizResult.quizQuestions" ng-model="selectedQuestion.index"></select>
 					</p>
 
 					<!-- <h4>Question: {{currentIndex + 1}}</h4> -->
