@@ -23,14 +23,16 @@ $(document).ready(function(){
 			<div class="row">
 				<div class="col-xs-12">
 					<p>
-						<span ng-repeat="question in quizResult.quizQuestions">
+						<!-- <span ng-repeat="question in quizResult.quizQuestions">
 							<a href="#" ng-click="gotoQuestion($index)" ng-class="{selected: isCurrentQuestion($index)}">{{$index + 1}}</a>
-						</span>
+						</span> -->
+						<select ng-options="key as key*1 + 1 for (key, question) in quizResult.quizQuestions" ng-model="selectedQuestion.index"></select>
 					</p>
 
 					<!-- <h4>Question: {{currentIndex + 1}}</h4> -->
-					<p ng-show="{{currentQuestion.clinicalInfo}}">
-						{{currentQuestion.clinicalInfo}}
+					<!-- <p ng-show="{{currentQuestion.clinicalInfo}}"> -->
+					<p>
+						{{currentQuestion.clinicalInfo || ''}}
 					</p>
 
 					<p>{{currentQuestion.stem}}</p>

@@ -10,6 +10,7 @@ quizApp.controller('questionCtrl', ['$scope', '$http', '$window', '$interval', '
 		$scope.quizResult = quizResult
 		$scope.currentIndex = null
 		$scope.currentQuestion = {}
+		$scope.selectedQuestion = {index: "0"}
 		$scope.elapsedTime = "00:00:00" // should be time formatted string
 		var partials = {
 			question: '/html/quiz.question.html',
@@ -131,6 +132,7 @@ quizApp.controller('questionCtrl', ['$scope', '$http', '$window', '$interval', '
 			
 			$scope.currentQuestion = question
 			$scope.currentIndex = index
+			$scope.selectedQuestion.index = index + ''
 
 			if (!question.imageSeries){
 				_loadImage(index, function(){
@@ -140,6 +142,14 @@ quizApp.controller('questionCtrl', ['$scope', '$http', '$window', '$interval', '
 				_onQuestionLoad(index)
 			}
 		}
+
+		$scope.$watch('selectedQuestion.index', function(nv, ov){
+			if (nv === ov){ return false }
+			
+			var key = parseInt(nv, 10)
+
+			$scope.gotoQuestion(key)
+		}, true)
 
 		$scope.isCurrentQuestion = function(index){
 
