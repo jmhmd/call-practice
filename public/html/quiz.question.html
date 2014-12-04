@@ -9,64 +9,54 @@ $(document).ready(function(){
 			winHeight = $(window).height()
 
 		viewer.height( winHeight - viewer.offset().top )
+		console.log(winHeight, viewer.offset().top)
 	}
 	$(window).on('resize', function(){
 		sizeViewer()
 	})
 	
 	sizeViewer()
+	window.sizeViewer = sizeViewer
 })
 </script>
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-xs-4">
-			<div class="row">
-				<div class="col-xs-12">
-					<p>
-						<!-- <span ng-repeat="question in quizResult.quizQuestions">
-							<a href="#" ng-click="gotoQuestion($index)" ng-class="{selected: isCurrentQuestion($index)}">{{$index + 1}}</a>
-						</span> -->
-						<select ng-options="key as (key*1 + 1) + (question.userAnswer ? '' : ' *') for (key, question) in quizResult.quizQuestions" ng-model="selectedQuestion.index"></select>
-					</p>
+		<div class="col-xs-3">
+			<p>
+				{{currentQuestion.clinicalInfo || ''}}
+			</p>
 
-					<!-- <h4>Question: {{currentIndex + 1}}</h4> -->
-					<!-- <p ng-show="{{currentQuestion.clinicalInfo}}"> -->
-					<p>
-						{{currentQuestion.clinicalInfo || ''}}
-					</p>
-
-					<p>{{currentQuestion.stem}}</p>
-
-					<div id="Selections"> 
-						<div class="radio" ng-repeat="choice in currentQuestion.choices">
-							<label>
-								<input type="radio" name="choices" value="{{choice._id}}" ng-model="quizResult.quizQuestions[currentIndex].userAnswer"> {{choice.option}}
-							</label>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row" style="margin-top:50px;">
-				<div class="col-xs-6">
-					<div id="previous" class="nav-button btn" ng-click="prevQuestion()">
-						Previous study
-					</div>
-				</div>
-				<div class="col-xs-6 text-right" ng-switch on="isLastQuestion()">
-					<div id="next" class="nav-button btn" ng-click="nextQuestion()" ng-switch-default> 
-						Next study 
-					</div>
-					<button type="button" class="btn btn-primary" ng-click="submitAndFinish()" ng-switch-when="true">Submit and Finish</button>
-				</div>
-			</div>
-			<!-- <div id="text">
-			<textarea rows="4" cols="30"></textarea>
-
-			</div> -->
+			<p>{{currentQuestion.stem}}</p>
 		</div>
-		
+		<div class="col-xs-6">
+
+			<div id="Selections"> 
+				<div class="radio" ng-repeat="choice in currentQuestion.choices">
+					<label>
+						<input type="radio" name="choices" value="{{choice._id}}" ng-model="quizResult.quizQuestions[currentIndex].userAnswer"> {{choice.option}}
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-2 text-center" ng-switch on="isLastQuestion()">
+			<div class="row">
+				<div id="next" class="nav-button btn" ng-click="nextQuestion()" ng-switch-default> 
+					Next study 
+				</div>
+				<button type="button" class="btn btn-primary" ng-click="submitAndFinish()" ng-switch-when="true">Submit and Finish</button>
+				<!-- <a ng-click="prevQuestion()">Previous study</a> -->
+			</div>
+		</div>
+		<div class="col-xs-1">
+			<p>
+				<select ng-options="key as (key*1 + 1) + (question.userAnswer ? '' : ' *') for (key, question) in quizResult.quizQuestions" ng-model="selectedQuestion.index"></select>
+			</p>
+		</div> 
+	</div>
+
+	<div class="row">
 		<!-- set padding-right for viewer right side gutter -->
-		<div class="col-xs-8" style="padding-right:5px;">
+		<div class="col-xs-12" style="padding-right:5px;">
 			<div class="row">
 				<div class="col-xs-12">
 
