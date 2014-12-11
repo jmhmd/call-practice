@@ -49,7 +49,8 @@ $(document).ready(function(){
 		</div>
 		<div class="col-xs-1">
 			<p>
-				<select ng-options="key as (key*1 + 1) + (question.userAnswer ? '' : ' *') for (key, question) in quizResult.quizQuestions" ng-model="selectedQuestion.index"></select>
+				<!-- <select ng-options="key as (key*1 + 1) + (question.userAnswer ? '' : ' *') for (key, question) in quizResult.quizQuestions | orderBy:'questionNumber'" ng-model="selectedQuestion.index"></select> -->
+				<select ng-options="question.questionIndex as question.questionIndex+1 + (question.userAnswer ? '' : ' *') for question in quizResult.quizQuestions | orderBy:'questionIndex'" ng-model="selectedQuestion.index"></select>
 			</p>
 		</div> 
 	</div>
