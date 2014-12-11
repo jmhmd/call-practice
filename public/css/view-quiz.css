@@ -27,6 +27,19 @@ body {
     position: relative;
 }
 
+.columns {
+    column-count: 2;
+    column-gap: 0px;
+    -moz-column-count: 2;
+    -moz-column-gap: 0px;
+    -webkit-column-count: 2;
+    -webkit-column-gap: 0px;
+}
+
+.answer-choice {
+    margin-top: 0;
+}
+
 .instructions {
     color: rgb(167, 31, 31);
 }

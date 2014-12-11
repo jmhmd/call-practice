@@ -30,8 +30,8 @@ $(document).ready(function(){
 		</div>
 		<div class="col-xs-6">
 
-			<div id="Selections"> 
-				<div class="radio" ng-repeat="choice in currentQuestion.choices">
+			<div id="selections" ng-class="{columns: currentQuestion.choices.length > 5}">
+				<div class="radio answer-choice" ng-repeat="choice in currentQuestion.choices">
 					<label>
 						<input type="radio" name="choices" value="{{choice._id}}" ng-model="quizResult.quizQuestions[currentIndex].userAnswer"> {{choice.option}}
 					</label>
