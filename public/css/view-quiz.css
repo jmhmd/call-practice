@@ -26,3 +26,7 @@ body {
     display: inline-;
     position: relative;
 }
+
+.instructions {
+    color: rgb(167, 31, 31);
+}
