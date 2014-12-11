@@ -23,7 +23,8 @@
 			</tr>
 			{{#each usersTaken}}
 				<tr>
-					<td>User {{math @index "+" 1}}</td>
+					<!-- <td>User {{math @index "+" 1}}</td> -->
+					<td>{{this.userName}}</td>
 					{{#each this.scores}}
 						<td>{{this}}%</td>
 					{{/each}}

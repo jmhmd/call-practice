@@ -351,6 +351,7 @@ exports.showQuizReport = function(req, res, next){
 	QuizResult
 		.find({quiz: quizId, completed: true})
 		.populate('quizQuestions.questionId')
+		.populate('user')
 		.sort('endDate')
 		.exec(function(err, results){
 			if (err){ return next(err) }
@@ -366,14 +367,15 @@ exports.showQuizReport = function(req, res, next){
 
 			_.each(results, function(result){
 
-				var user = _.find(usersTaken, {userId: result.user})
+				var user = _.find(usersTaken, {userId: result.user._id})
 
 				if (user){
 					user.scores.push(result.percentCorrect)
 					user.average = math.round(math.mean(user.scores))
 				} else {
 					user = {
-						userId: result.user,
+						userId: result.user._id,
+						userName: result.user.profile.name || result.user.email,
 						scores: [result.percentCorrect],
 						average: result.percentCorrect
 					}
