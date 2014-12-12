@@ -241,3 +241,23 @@ quizApp.controller('questionCtrl', ['$scope', '$http', '$window', '$interval', '
 
 	}
 ])
+
+$(document).on('resize-viewer',function(){
+
+	//
+	// set up resizing of view area
+	//
+	function sizeViewer() {
+		var viewer = $('#stackview'),
+			winHeight = $(window).height()
+
+		viewer.height( winHeight - viewer.offset().top )
+		console.log(winHeight, viewer.offset().top)
+	}
+	$(window).on('resize', function(){
+		sizeViewer()
+	})
+	
+	sizeViewer()
+	window.sizeViewer = sizeViewer
+})

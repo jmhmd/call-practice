@@ -50,6 +50,9 @@ quizApp.directive('stackView', [ '$window',
 							})
 							viewer.loadAnnotations([{type:'point', image: 0, coords: scope.selectPoint.coords}])
 
+							// resize viewer
+							$(document).trigger('resize-viewer')
+
 							unbindSrcWatch()
 						})
 					} else {
@@ -64,7 +67,10 @@ quizApp.directive('stackView', [ '$window',
 							next()
 						})
 						viewer.loadAnnotations([{type:'point', image: 0, coords: scope.selectPoint.coords}])
-					}				
+
+						// resize viewer
+						$(document).trigger('resize-viewer')
+					}		
 				})
 
 				$(viewer).on('mark-point', function(){
