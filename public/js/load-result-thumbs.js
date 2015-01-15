@@ -1,3 +1,5 @@
+var toggleImages
+
 $(document).ready(function(){
 
 	var placeMarker = function(el, coords, color){
@@ -10,7 +12,7 @@ $(document).ready(function(){
 			//h = el.naturalHeight,
 			ratio = w / $(el).width(),
 			//offset = $(el).offset(),
-			marker = $('<span></span>').addClass('glyphicon glyphicon-screenshot').css({'position': 'absolute', 'color': color}),
+			marker = $('<span></span>').addClass('glyphicon glyphicon-screenshot marker').css({'position': 'absolute', 'color': color}),
 			//loc = coords.split(',').map(function(i){return parseInt(i)}),
 			loc = coords,
 			mTop = (loc[1] / ratio),
@@ -22,66 +24,96 @@ $(document).ready(function(){
 	}
 
 	var lazyImages = $('.lazy-load')
+	var imagesLoaded = 0
 
-	lazyImages.each(function(){
+	toggleImages = function() {
 
-		var studyId = $(this).attr('data-src')
+		var toggleChecked = $('#show-images').is(':checked')
 
-		if (!studyId){ return true }
+		if (toggleChecked && !imagesLoaded){
+			lazyImages.show()
+			loadImages()
+		} else if (toggleChecked){
+			lazyImages.show()
+			$('.marker').show()
+		} else {
+			lazyImages.hide()
+			$('.marker').hide()
+		}
+	}
 
-		// load image object and set 'this' in callback to <img> element
-		$.ajax({url: '/api/getImageObject/' + studyId, dataType: 'json', context: this})
-				.done(function(res) {
+	toggleImages()
 
-					console.log('loaded image: ', res)
+	var loadImages = function() {
 
-					$(this)
-						.one('load', function(e){
+		imagesLoaded = 1
 
-							var el = e.target,
-								userCoords = $(el).attr('data-loc'),
-								goldStandardCoords = $(el).attr('data-gold-standard-loc')
+		lazyImages.each(function(){
 
-							// put in array if not already
-							userCoords = userCoords.indexOf('[') !== 0 ? '[' + userCoords + ']' : userCoords
-							goldStandardCoords = goldStandardCoords.indexOf('[') !== 0 ? '[' + goldStandardCoords + ']' : goldStandardCoords
+			var studyId = $(this).attr('data-src')
 
-							// parse as JSON
-							userCoords = JSON.parse(userCoords)
-							goldStandardCoords = JSON.parse(goldStandardCoords)
+			if (!studyId){ return true }
 
-							console.log(userCoords)
-							console.log(goldStandardCoords)
+			// load image object and set 'this' in callback to <img> element
+			$.ajax({url: '/api/getImageObject/' + studyId, dataType: 'json', context: this})
+					.done(function(res) {
 
-							if ($.isArray(userCoords[0])){
-								$.each(userCoords, function(i, coords){
-									placeMarker(el, coords, 'red')
-								})
-							} else {
-								placeMarker(el, userCoords, 'red')
-							}
+						console.log('loaded image: ', res)
 
-							if ($.isArray(goldStandardCoords[0])){
-								$.each(goldStandardCoords, function(i, coords){
-									placeMarker(el, coords, 'yellow')
-								})
-							} else {
-								placeMarker(el, goldStandardCoords, 'yellow')
-							}
+						$(this)
+							.on('click', function(){
+								window.open(res.imageStacks[0].imagePaths[0], '_blank')
+							})
+							.one('load', function(e){
 
-							
-						})
-						.attr('src', res.imageStacks[0].imagePaths[0])
-						.each(function() {
-							console.log('imgh: ', this.naturalHeight)
-							//Cache fix for browsers that don't trigger .load()
-							if(this.complete){ $(this).trigger('load') }
-						})
-					
-				})
-				.fail(function(err) {
+								var el = e.target,
+									userCoords = $(el).attr('data-loc'),
+									goldStandardCoords = $(el).attr('data-gold-standard-loc')
 
-					console.error(err)
-				})
-	})
+								// put in array if not already
+								userCoords = userCoords.indexOf('[') !== 0 ? '[' + userCoords + ']' : userCoords
+								goldStandardCoords = goldStandardCoords.indexOf('[') !== 0 ? '[' + goldStandardCoords + ']' : goldStandardCoords
+
+								// parse as JSON
+								userCoords = JSON.parse(userCoords)
+								goldStandardCoords = JSON.parse(goldStandardCoords)
+
+								console.log(userCoords)
+								console.log(goldStandardCoords)
+
+								if ($.isArray(userCoords[0])){
+									$.each(userCoords, function(i, coords){
+										placeMarker(el, coords, 'red')
+									})
+								} else {
+									placeMarker(el, userCoords, 'red')
+								}
+
+								if ($.isArray(goldStandardCoords[0])){
+									$.each(goldStandardCoords, function(i, coords){
+										placeMarker(el, coords, 'yellow')
+									})
+								} else {
+									placeMarker(el, goldStandardCoords, 'yellow')
+								}
+
+								
+							})
+							.attr('src', res.imageStacks[0].imagePaths[0])
+							.css('cursor', 'pointer')
+
+						$(this)
+							.each(function() {
+								console.log('imgh: ', this.naturalHeight)
+								//Cache fix for browsers that don't trigger .load()
+								if(this.complete){ $(this).trigger('load') }
+							})
+						
+					})
+					.fail(function(err) {
+
+						console.error(err)
+					})
+		})
+	}
 })
