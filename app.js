@@ -72,7 +72,12 @@ app.engine('html', hbs.express3({
 }))
 app.set('view engine', 'html')
 app.set('views', __dirname + '/views')
-app.use(express.logger('dev'))
+if (app.get('env') === 'development') {
+  app.use(express.logger('dev'))
+}
+if (app.get('env') === 'production') {
+  app.use(express.logger())
+}
 app.use(express.bodyParser())
 app.use(expressValidator())
 app.use(express.methodOverride())
