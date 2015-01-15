@@ -136,8 +136,8 @@ quizApp.controller('questionCtrl', ['$scope', '$http', '$window', '$interval', '
 			var question = _getQuestion(index)
 			
 			$scope.currentQuestion = question
-			$scope.currentIndex = index
-			$scope.selectedQuestion.index = index
+			$scope.currentIndex = parseInt(index, 10)
+			$scope.selectedQuestion.index = parseInt(index, 10)
 
 			if (!question.imageSeries){
 				_loadImage(index, function(){
@@ -158,11 +158,11 @@ quizApp.controller('questionCtrl', ['$scope', '$http', '$window', '$interval', '
 
 		$scope.isCurrentQuestion = function(index){
 
-			return index === $scope.currentIndex
+			return parseInt(index, 10) === $scope.currentIndex
 		}
 
 		$scope.isLastQuestion = function(){
-
+			
 			return $scope.currentIndex === $scope.quizResult.quizQuestions.length - 1
 		}
 

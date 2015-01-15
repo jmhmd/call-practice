@@ -1,6 +1,6 @@
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-xs-3">
+		<div class="col-xs-2">
 			<p>
 				{{currentQuestion.clinicalInfo || ''}}
 			</p>
@@ -17,12 +17,16 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-xs-2 text-center" ng-switch on="isLastQuestion()">
+		<div class="col-xs-3 text-center" ng-switch on="isLastQuestion()">
 			<div class="row">
-				<div id="next" class="nav-button btn" ng-click="nextQuestion()" ng-switch-default> 
+				<!-- <div id="next" class="nav-button btn" ng-click="nextQuestion()" ng-switch-default> 
 					Next study 
+				</div> -->
+				<div class="btn-group btn-group-lg" role="group">
+					<button type="button" class="btn btn-default" ng-click="prevQuestion()">Previous</button>
+					<button type="button" class="btn btn-default" style="padding-left:30px;padding-right:30px;" ng-click="nextQuestion()" ng-switch-default>Next</button>
+					<button type="button" class="btn btn-primary" ng-click="submitAndFinish()" ng-switch-when="true">Finish</button>
 				</div>
-				<button type="button" class="btn btn-primary" ng-click="submitAndFinish()" ng-switch-when="true">Submit and Finish</button>
 				<!-- <a ng-click="prevQuestion()">Previous study</a> -->
 			</div>
 		</div>
