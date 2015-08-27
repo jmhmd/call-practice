@@ -15,6 +15,8 @@ module.exports = {
 
 if (process.env.NODE_ENV === 'production') {
 	module.exports.db = 'mongodb://localhost:27017/call-practice-prod'
+} else if (process.env.NODE_ENV === 'remote-production') {
+	module.exports.db = 'mongodb://jasonhostetter.com:27017/call-practice-prod'
 } else {
 	module.exports.db = 'mongodb://localhost:27017/call-practice'
 }
@@ -33,7 +35,7 @@ if (process.env.NODE_ENV === 'development'){
 	casefiles.apikey = '530676deece97f623cfc7428'
 	casefiles.url = 'http://dev.casefil.es/' // must include trailing slash
 	uploadKeyRoot = "uploads/temp/"
-} else if (process.env.NODE_ENV === 'production'){
+} else if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'remote-production'){
 
 	casefiles.apikey = '53923be181c7785a075a247d'
 	casefiles.url = 'http://casefil.es/' // must include trailing slash

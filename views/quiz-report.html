@@ -26,7 +26,10 @@
 					<!-- <td>User {{math @index "+" 1}}</td> -->
 					<td>{{this.userName}}</td>
 					{{#each this.scores}}
-						<td>{{this}}%</td>
+						<td>
+							{{this.percent}}% <br>
+							<small class="text-muted">{{this.date}}</small>
+						</td>
 					{{/each}}
 					{{#times (math ../maxAttempts "-" (length this.scores))}}
 						<td></td>
