@@ -20,5 +20,11 @@
     "async": "~0.2.10",
     "lodash": "~2.4.1",
     "mathjs": "^0.24.1"
+  },
+  "devDependencies": {
+    "excel-export": "^0.4.1",
+    "express-csv": "^0.6.0",
+    "json2csv": "^2.4.1",
+    "mongodb": "^2.0.33"
   }
 }
