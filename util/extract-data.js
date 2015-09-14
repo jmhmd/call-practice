@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
 	fs = require('fs'),
 	path = require('path')
 
-fs.readdirSync('./config/models').forEach(function(file) {
+fs.readdirSync(path.join(__dirname, '../config/models')).forEach(function(file) {
 	require(path.join(__dirname, '..', 'config/models/', file))
 })
 
@@ -38,7 +38,7 @@ var result = [],
 function go () {
 
 	QuizResult
-		.find({quiz: preQuizId, completed: true})
+		.find({quiz: postQuizId, completed: true})
 		.populate('user')
 		.populate('preQuestions.questionId')
 		.populate('postQuestions.questionId')

@@ -13,9 +13,7 @@ module.exports = {
 	}
 }
 
-if (process.env.NODE_ENV === 'remote-production'){
-	module.exports.db = 'mongodb://jasonhostetter.com:27017/call-practice-prod'
-} else if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
 	module.exports.db = 'mongodb://localhost:27017/call-practice-prod'
 } else if (process.env.NODE_ENV === 'remote-production') {
 	module.exports.db = 'mongodb://jasonhostetter.com:27017/call-practice-prod'
